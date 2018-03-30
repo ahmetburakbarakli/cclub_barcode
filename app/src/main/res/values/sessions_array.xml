@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sessions_array">
+        <item>1. Oturum</item>
+        <item>2. Oturum</item>
+        <item>3. Oturum</item>
+        <item>4. Oturum</item>
+        <item>5. Oturum</item>
+        <item>6. Oturum</item>
+    </string-array>
+</resources>
