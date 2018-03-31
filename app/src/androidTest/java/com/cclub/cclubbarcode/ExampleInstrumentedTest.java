@@ -1,4 +1,4 @@
-package com.cclub.cclubbarkod;
+package com.cclub.cclubbarcode;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
