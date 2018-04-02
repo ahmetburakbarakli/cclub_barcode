@@ -3,3 +3,12 @@ Changed the package name to obtain harmony among all files.
 Added changelog.
 Added feedback toast after submiting barcode to server. (Actually barcode is NOT sent to server. The sending process is randomly percieved as succesful or unsuccesful)
 EditText has now hint and is longer in order to show all of the hint.
+
+v0.0.2
+Barcodes can be scan now. Ahoy!
+Users in the server can be viewed.
+Sessions is gotten from server.
+Barcode is still NOT sent to server.
+Added awesome nyan cat!!!
+Prepared infrastructure for getting statistic.
+Also need to be connected to internet in order to open application.

@@ -7,22 +7,46 @@
     tools:context="com.cclub.cclubbarcode.MainActivity">
 
     <EditText
-        android:id="@+id/barcode_name"
+        android:id="@+id/barcode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/submit"
+        android:layout_below="@+id/session_picker"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="60dp"
+        android:layout_marginTop="40dp"
         android:ems="13"
         android:inputType="textPersonName" />
 
     <Button
         android:id="@+id/submit"
+        android:text="Gönder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="48dp" />
+
+    <Button
+        android:id="@+id/users"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/submit"
+        android:layout_alignBottom="@+id/submit"
+        android:layout_marginLeft="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_toEndOf="@+id/submit"
+        android:layout_toRightOf="@+id/submit"
+        android:text="Users" />
+
+    <Button
+        android:id="@+id/stats"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageView"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_toLeftOf="@+id/submit"
+        android:layout_toStartOf="@+id/submit"
+        android:text="Stats" />
 
     <Spinner
         android:id="@+id/session_picker"
@@ -30,5 +54,16 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginTop="52dp" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/barcode"
+        android:layout_above="@id/submit"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp"
+        app:srcCompat="@drawable/metucclubcat" />
 
 </RelativeLayout>
