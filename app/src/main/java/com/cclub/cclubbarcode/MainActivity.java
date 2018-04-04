@@ -1,14 +1,17 @@
 package com.cclub.cclubbarcode;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -25,7 +28,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     EditText  barcode;
-    Button submit,users,stats;
+    Button submit,users,stats, about, random;
     ImageView nyan_cat;
     Spinner session_picker;
 
@@ -39,14 +42,12 @@ public class MainActivity extends AppCompatActivity {
         //These are the elements used in main activity.
         barcode         = findViewById(R.id.barcode);
         stats           = findViewById(R.id.stats);
+        about           = findViewById(R.id.about);
+        random          = findViewById(R.id.random);
         nyan_cat        = findViewById(R.id.nyan_cat);
         users           = findViewById(R.id.users);
         submit          = findViewById(R.id.submit);
         session_picker  = findViewById(R.id.session_picker);
-
-        //Setting the default texts.
-        barcode.setHint("Buraya barkodu yazabilirsin!");
-        submit.setText(R.string.submit);
 
         //Showing snackbar in order to give additional feedback to user.
         submit.setOnClickListener(new View.OnClickListener() {
@@ -56,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
                     JsonObject session = sessionList.get(session_picker.getSelectedItemPosition());
 
                     String sessionid = session.get("_id").getAsString();
-                    Log.d("selected session id", sessionid);
 
                     String barcodeText = barcode.getText().toString();
                     barcodeText = barcodeText.replace("\n", "");
@@ -76,35 +76,35 @@ public class MainActivity extends AppCompatActivity {
                                             if(result.get("success").getAsBoolean()) {
                                                 Snackbar.make(findViewById(R.id.submit), "Başarıyla Gönderildi!", Snackbar.LENGTH_LONG)
                                                         .show();
+
                                                 barcode.setText("");
                                             } else {
+
                                                 Snackbar.make(findViewById(R.id.submit), "Başaramadın.", Snackbar.LENGTH_LONG)
                                                         .show();
                                             }
                                         }
+                                        else {
+                                            e.printStackTrace();
 
+                                            Snackbar.make(findViewById(R.id.submit), "Başaramadın. (Sistemsel Hata)", Snackbar.LENGTH_LONG)
+                                                    .show();
+                                        }
                                     }
                                 });
                     }
-
+                    else {
+                        Snackbar.make(findViewById(R.id.submit), "Alanlar boş olamazzzz!", Snackbar.LENGTH_LONG)
+                                .show();
+                    }
 
                 }
             }
         });
 
-        //Shows all registered users in the server.
-        users.setOnClickListener(new View.OnClickListener() {
+        about.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, GetUsersActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        //Will show statistic among all users in the server.
-        stats.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {/*
                 LayoutInflater inflater = getLayoutInflater();
 
                 View v = inflater.inflate(R.layout.view_about, null);
@@ -125,9 +125,31 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                 });
-                dialog.show();*/
-                Intent intent = new Intent(MainActivity.this, StatsActivity.class);
-                startActivity(intent);
+                dialog.show();
+            }
+        });
+
+        //Shows all registered users in the server.
+        users.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, GetUsersActivity.class));
+            }
+        });
+
+        //Will show statistic among all users in the server.
+        stats.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, StatsActivity.class));
+            }
+        });
+
+        // Starts get random people activity
+        random.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, RandomActivity.class));
             }
         });
 
@@ -172,6 +194,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
         //Getting sessions from server, and adding them to spinner. However, it is not fully functional yet.
         Ion.with(this)
                 .load(Config.SERVER_URL + "/sessions")

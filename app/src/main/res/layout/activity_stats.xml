@@ -4,25 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.cclub.cclubbarcode.StatsActivity">
+    tools:context="com.cclub.cclubbarcode.StatsActivity"
+    android:layout_margin="5dp">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/textViewStats1"
-        android:textSize="16dp"/>
+        android:textSize="20dp"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/textViewStats2"
-        android:textSize="16dp"/>
+        android:textSize="20dp"/>
 
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/textViewStats3"
-        android:textSize="16dp"/>
+        android:textSize="20dp"/>
 
 </LinearLayout>

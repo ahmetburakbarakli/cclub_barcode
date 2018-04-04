@@ -2,6 +2,7 @@ package com.cclub.cclubbarcode;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
 
-public class StatsActivity extends Activity {
+public class StatsActivity extends AppCompatActivity {
     ArrayList<String> usersList;
 
     TextView textViewStats1;
@@ -94,7 +95,7 @@ public class StatsActivity extends Activity {
                     @Override
                     public void onCompleted(Exception e, JsonObject result) {
                         if(e == null) {
-                            textViewStats3.setText(result.get("usercount").getAsInt());
+                            textViewStats3.setText("Toplam kişi sayısı: " + result.get("usercount").getAsString());
                         }
                         else {
                             e.printStackTrace();
