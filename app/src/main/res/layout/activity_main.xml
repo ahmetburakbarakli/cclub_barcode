@@ -56,7 +56,7 @@
         android:layout_marginTop="52dp" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/nyan_cat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/barcode"

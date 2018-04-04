@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 
 import com.google.gson.JsonArray;
@@ -25,6 +26,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     EditText  barcode;
     Button submit,users,stats;
+    ImageView nyan_cat;
     Spinner session_picker;
 
     ArrayList<JsonObject> sessionList;
@@ -37,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         //These are the elements used in main activity.
         barcode         = findViewById(R.id.barcode);
         stats           = findViewById(R.id.stats);
+        nyan_cat        = findViewById(R.id.nyan_cat);
         users           = findViewById(R.id.users);
         submit          = findViewById(R.id.submit);
         session_picker  = findViewById(R.id.session_picker);
@@ -142,6 +145,25 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        nyan_cat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Getting permission
+                if (ContextCompat.checkSelfPermission(MainActivity.this,
+                        Manifest.permission.CAMERA)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    if (!ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.CAMERA)) {
+                        ActivityCompat.requestPermissions(MainActivity.this,
+                                new String[]{Manifest.permission.CAMERA},
+                                1);
+                    }
+                } else {
+                    //Starting scanner.
+                    Intent intent = new Intent(MainActivity.this, SimpleScannerActivity.class);
+                    startActivityForResult(intent,1337);
+                }
+            }
+        });
         //Getting sessions from server, and adding them to spinner. However, it is not fully functional yet.
         Ion.with(this)
                 .load(Config.SERVER_URL + "/sessions")
