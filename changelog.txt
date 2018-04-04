@@ -12,3 +12,7 @@ Barcode is still NOT sent to server.
 Added awesome nyan cat!!!
 Prepared infrastructure for getting statistic.
 Also need to be connected to internet in order to open application.
+
+pre-v0.0.3
+Added a about dialog in stats button
+Removed unnecessary imports
