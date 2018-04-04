@@ -10,32 +10,29 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
-
 import java.util.ArrayList;
-import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
     EditText  barcode;
     Button submit,users,stats;
     Spinner session_picker;
+
+    ArrayList<JsonObject> sessionList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,23 +49,38 @@ public class MainActivity extends AppCompatActivity {
         barcode.setHint("Buraya barkodu yazabilirsin!");
         submit.setText(R.string.submit);
 
-        //Getting the potential options. We are getting this from local xml file, but we will have gotten from internet by 14 April 2018.
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.sessions_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        session_picker.setAdapter(adapter);
-
         //Showing snackbar in order to give additional feedback to user.
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Random rn = new Random();
-                if(rn.nextBoolean()) {
-                    Snackbar.make(findViewById(R.id.submit), "Başarıyla Gönderildi!", Snackbar.LENGTH_LONG)
-                            .show();
-                }
-                else {
-                    Snackbar.make(findViewById(R.id.submit), "Başaramadın.", Snackbar.LENGTH_LONG)
-                            .show();
+                if(sessionList.size() > 0) {
+                    JsonObject session = sessionList.get(session_picker.getSelectedItemPosition());
+                    String sessionid = session.getAsJsonObject("_id").getAsString();
+                    Log.d("selected session id", sessionid);
+
+                    String barcodeText = barcode.getText().toString();
+
+                    if(!sessionid.equals("") && !barcodeText.equals("")) {
+                        Ion.with(MainActivity.this)
+                                .load(Config.SERVER_URL + "/attends")
+                                .setHeader(Config.HEADER_NAME, Config.HEADER_CONTENT)
+                                .setBodyParameter("barcode", barcodeText)
+                                .setBodyParameter("sessionid", sessionid)
+                                .asJsonObject()
+                                .setCallback(new FutureCallback<JsonObject>() {
+                                    @Override
+                                    public void onCompleted(Exception e, JsonObject result) {
+                                        if(e == null) {
+                                            Log.d("Attending result", result.toString());
+
+                                            Snackbar.make(findViewById(R.id.submit), "Başarıyla Gönderildi!", Snackbar.LENGTH_LONG)
+                                                    .show();
+                                        }
+                                    }
+                                });
+                    }
+
+
                 }
             }
         });
@@ -78,14 +90,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, GetUsersActivity.class);
-                startActivityForResult(intent,1337);
+                startActivity(intent);
             }
         });
 
         //Will show statistic among all users in the server.
         stats.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view) {/*
                 LayoutInflater inflater = getLayoutInflater();
 
                 View v = inflater.inflate(R.layout.view_about, null);
@@ -106,7 +118,9 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                 });
-                dialog.show();
+                dialog.show();*/
+                Intent intent = new Intent(MainActivity.this, StatsActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -133,22 +147,30 @@ public class MainActivity extends AppCompatActivity {
 
         //Getting sessions from server, and adding them to spinner. However, it is not fully functional yet.
         Ion.with(this)
-                .load("https://cclubbarcode.herokuapp.com/sessions")
-                .setHeader("cclub","hallederiz")
+                .load(Config.SERVER_URL + "/sessions")
+                .setHeader(Config.HEADER_NAME, Config.HEADER_CONTENT)
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
                     public void onCompleted(Exception e, JsonObject result) {
-                        JsonArray sessions_jsonarray = result.getAsJsonArray("sessions");
-                        ArrayList<JsonObject> sessionList = new ArrayList<>();
-                        for(int i = 0; i<sessions_jsonarray.size(); i++) {
-                            JsonElement user = sessions_jsonarray.get(i);
+                        if(e == null) {
+                            sessionList = new ArrayList<>();
 
-                            sessionList.add(user.getAsJsonObject());
+                            ArrayList sessionNameList = new ArrayList();
+
+                            JsonArray sessions_jsonarray = result.getAsJsonArray("sessions");
+                            for(int i = 0; i<sessions_jsonarray.size(); i++) {
+                                JsonElement session = sessions_jsonarray.get(i);
+
+                                sessionList.add(session.getAsJsonObject());
+                                sessionNameList.add(session.getAsJsonObject().get("description").getAsString());
+                            }
+
+
+                            ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_spinner_dropdown_item,sessionNameList);
+                            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            session_picker.setAdapter(adapter);
                         }
-
-                        SpinnerAdapter adapter = new SpinnerAdapter(MainActivity.this, android.R.layout.simple_list_item_1, sessionList);
-                        session_picker.setAdapter(adapter);
                     }
                 });
     }
@@ -160,31 +182,6 @@ public class MainActivity extends AppCompatActivity {
             String message=data.getStringExtra("MESSAGE");
             Log.i("Message is",message);
             barcode.setText(message);
-        }
-    }
-
-    //TODO Ozan buraya açıklama yazar mısın? ty.
-    public static class SpinnerAdapter extends ArrayAdapter<JsonObject> {
-        ArrayList<JsonObject> objects = new ArrayList<>();
-        @NonNull
-        @Override
-        public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-            View v = super.getView(position, convertView, parent);
-
-            ((TextView) v.findViewById(android.R.id.text1)).setText(objects.get(position).getAsJsonObject().get("description").getAsString());
-
-            v.findViewById(android.R.id.text1).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Log.d("text", objects.get(position).getAsJsonObject().get("_id").getAsString());
-                }
-            });
-            return v;
-        }
-
-        public SpinnerAdapter(@NonNull Context context, int resource, @NonNull ArrayList<JsonObject> objects) {
-            super(context, android.R.layout.simple_list_item_1, objects);
-            this.objects = objects;
         }
     }
 }
