@@ -2,6 +2,7 @@ package com.cclub.cclubbarcode;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
@@ -9,9 +10,11 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -26,10 +29,7 @@ import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Setting the default texts.
         barcode.setHint("Buraya barkodu yazabilirsin!");
-        submit.setText("Gönder");
+        submit.setText(R.string.submit);
 
         //Getting the potential options. We are getting this from local xml file, but we will have gotten from internet by 14 April 2018.
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.sessions_array, android.R.layout.simple_spinner_item);
@@ -86,31 +86,50 @@ public class MainActivity extends AppCompatActivity {
         stats.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, SimpleScannerActivity.class);
-                startActivityForResult(intent,1337);
+                LayoutInflater inflater = getLayoutInflater();
+
+                View v = inflater.inflate(R.layout.view_about, null);
+
+                final AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
+                dialog.create();
+                dialog.setView(v);
+
+                dialog.setPositiveButton("Kapat", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface d, int which) {
+
+                    }
+                });
+                dialog.setNegativeButton("Kapat but in different button.", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface d, int which) {
+
+                    }
+                });
+                dialog.show();
             }
         });
 
         //Whenever edittext barcode is clicked, it request permission to access camera. After granting permission, barcode reader from ZXingScanner starts and search for barcode, and if it finds one return it as string.
         barcode.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View view) {
-                 //Getting permission
-                 if (ContextCompat.checkSelfPermission(MainActivity.this,
-                         Manifest.permission.CAMERA)
-                         != PackageManager.PERMISSION_GRANTED) {
-                     if (!ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.CAMERA)) {
-                         ActivityCompat.requestPermissions(MainActivity.this,
-                                 new String[]{Manifest.permission.CAMERA},
-                                 1);
-                     }
-                 } else {
-                     //Starting scanner.
-                     Intent intent = new Intent(MainActivity.this, SimpleScannerActivity.class);
-                     startActivityForResult(intent,1337);
-                 }
-             }
-         });
+            @Override
+            public void onClick(View view) {
+                //Getting permission
+                if (ContextCompat.checkSelfPermission(MainActivity.this,
+                        Manifest.permission.CAMERA)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    if (!ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.CAMERA)) {
+                        ActivityCompat.requestPermissions(MainActivity.this,
+                                new String[]{Manifest.permission.CAMERA},
+                                1);
+                    }
+                } else {
+                    //Starting scanner.
+                    Intent intent = new Intent(MainActivity.this, SimpleScannerActivity.class);
+                    startActivityForResult(intent,1337);
+                }
+            }
+        });
 
         //Getting sessions from server, and adding them to spinner. However, it is not fully functional yet.
         Ion.with(this)
@@ -143,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
             barcode.setText(message);
         }
     }
-    
+
     //TODO Ozan buraya açıklama yazar mısın? ty.
     public static class SpinnerAdapter extends ArrayAdapter<JsonObject> {
         ArrayList<JsonObject> objects = new ArrayList<>();

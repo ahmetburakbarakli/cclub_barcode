@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/app_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/app_name_all_caps"
+            android:textSize="24sp"
+            android:paddingTop="20dp"/>
+
+        <TextView
+            android:id="@+id/ver_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/ver"
+            android:layout_below="@id/app_name"/>
+
+        <TextView
+            android:id="@+id/dev_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/dev_names"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_below="@+id/ver_name"
+            android:layout_marginTop="20dp"/>
+
+        <TextView
+            android:id="@+id/ab"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/ab"
+            android:layout_below="@+id/dev_name"
+            android:layout_marginTop="5dp"/>
+
+        <TextView
+            android:id="@+id/ozan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/ozan"
+            android:layout_below="@+id/ab"
+            android:layout_marginTop="5dp"/>
+
+        <TextView
+            android:id="@+id/subtext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_below="@+id/ozan"
+            android:textSize="12sp"
+            android:layout_alignParentBottom="true"
+            android:text="@string/subtext"
+            android:layout_marginTop="24dp"/>
+
+    </RelativeLayout>
+
+</ScrollView>

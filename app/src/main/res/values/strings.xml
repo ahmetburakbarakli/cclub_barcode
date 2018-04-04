@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">CCLUB Barkod</string>
+    <string name="app_name_all_caps">CCLUB BARKOD</string>
+    <string name="ver">v0.0.3</string>
+    <string name="dev_names">Geliştiriciler</string>
+    <string name="ab">Ahmet Burak Baraklı</string>
+    <string name="ozan">Ozan Akın</string>
+    <string name="subtext">From CCLUBers, To CCLUBers.</string>
+    <string name="submit">Gönder</string>
 </resources>
