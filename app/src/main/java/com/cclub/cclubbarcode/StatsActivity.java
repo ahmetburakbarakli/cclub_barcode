@@ -28,7 +28,7 @@ public class StatsActivity extends Activity {
         textViewStats = findViewById(R.id.textViewStats);
 
         Ion.with(this)
-                .load(Config.SERVER_URL + "/stats")
+                .load(Config.SERVER_URL + "/attends/statics")
                 .setHeader(Config.HEADER_NAME, Config.HEADER_CONTENT)
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
@@ -36,6 +36,9 @@ public class StatsActivity extends Activity {
                     public void onCompleted(Exception e, JsonObject result) {
                         if(e == null) {
                             textViewStats.setText(result.toString());
+                        }
+                        else {
+                            e.printStackTrace();
                         }
                     }
                 });

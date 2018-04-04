@@ -54,10 +54,12 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(sessionList.size() > 0) {
                     JsonObject session = sessionList.get(session_picker.getSelectedItemPosition());
-                    String sessionid = session.getAsJsonObject("_id").getAsString();
+
+                    String sessionid = session.get("_id").getAsString();
                     Log.d("selected session id", sessionid);
 
                     String barcodeText = barcode.getText().toString();
+                    barcodeText = barcodeText.replace("\n", "");
 
                     if(!sessionid.equals("") && !barcodeText.equals("")) {
                         Ion.with(MainActivity.this)
@@ -70,9 +72,15 @@ public class MainActivity extends AppCompatActivity {
                                     @Override
                                     public void onCompleted(Exception e, JsonObject result) {
                                         if(e == null) {
-                                            Log.d("Attending result", result.toString());
+                                            if(result.get("success").getAsBoolean()) {
+                                                Log.d("Attending result", result.toString());
 
-                                            Snackbar.make(findViewById(R.id.submit), "Başarıyla Gönderildi!", Snackbar.LENGTH_LONG)
+                                                Snackbar.make(findViewById(R.id.submit), "Başarıyla Gönderildi!", Snackbar.LENGTH_LONG)
+                                                        .show();
+                                            }
+                                        }
+                                        else {
+                                            Snackbar.make(findViewById(R.id.submit), "Başaramadın.", Snackbar.LENGTH_LONG)
                                                     .show();
                                         }
                                     }
@@ -174,6 +182,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onCompleted(Exception e, JsonObject result) {
                         if(e == null) {
                             sessionList = new ArrayList<>();
+                            Log.d("sessions", "sessionlist");
 
                             ArrayList sessionNameList = new ArrayList();
 
@@ -189,6 +198,9 @@ public class MainActivity extends AppCompatActivity {
                             ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_spinner_dropdown_item,sessionNameList);
                             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                             session_picker.setAdapter(adapter);
+                        }
+                        else {
+                            e.printStackTrace();
                         }
                     }
                 });
