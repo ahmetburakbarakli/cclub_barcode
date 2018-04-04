@@ -19,7 +19,7 @@
         </activity>
         <activity android:name="com.cclub.cclubbarcode.SimpleScannerActivity" />
         <activity android:name="com.cclub.cclubbarcode.GetUsersActivity" />
-
+        <activity android:name="com.cclub.cclubbarcode.StatsActivity"/>
     </application>
 
 </manifest>

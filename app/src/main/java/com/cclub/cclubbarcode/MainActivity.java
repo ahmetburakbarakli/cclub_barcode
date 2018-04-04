@@ -121,9 +121,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //Whenever edittext barcode is clicked, it request permission to access camera. After granting permission, barcode reader from ZXingScanner starts and search for barcode, and if it finds one return it as string.
-        barcode.setOnClickListener(new View.OnClickListener() {
+        barcode.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public void onClick(View view) {
+            public boolean onLongClick(View view) {
                 //Getting permission
                 if (ContextCompat.checkSelfPermission(MainActivity.this,
                         Manifest.permission.CAMERA)
@@ -138,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(MainActivity.this, SimpleScannerActivity.class);
                     startActivityForResult(intent,1337);
                 }
+                return false;
             }
         });
 
