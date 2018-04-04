@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
                                                 Snackbar.make(findViewById(R.id.submit), "Başarıyla Gönderildi!", Snackbar.LENGTH_LONG)
                                                         .show();
                                                 barcode.setText("");
-                                            }else {
+                                            } else {
                                                 Snackbar.make(findViewById(R.id.submit), "Başaramadın.", Snackbar.LENGTH_LONG)
                                                         .show();
                                             }
