@@ -41,7 +41,7 @@
         android:id="@+id/stats"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/imageView"
+        android:layout_below="@+id/nyan_cat"
         android:layout_marginEnd="24dp"
         android:layout_marginRight="24dp"
         android:layout_toLeftOf="@+id/submit"

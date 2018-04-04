@@ -72,17 +72,17 @@ public class MainActivity extends AppCompatActivity {
                                     @Override
                                     public void onCompleted(Exception e, JsonObject result) {
                                         if(e == null) {
+                                            Log.d("Attending result", result.toString());
                                             if(result.get("success").getAsBoolean()) {
-                                                Log.d("Attending result", result.toString());
-
                                                 Snackbar.make(findViewById(R.id.submit), "Başarıyla Gönderildi!", Snackbar.LENGTH_LONG)
+                                                        .show();
+                                                barcode.setText("");
+                                            }else {
+                                                Snackbar.make(findViewById(R.id.submit), "Başaramadın.", Snackbar.LENGTH_LONG)
                                                         .show();
                                             }
                                         }
-                                        else {
-                                            Snackbar.make(findViewById(R.id.submit), "Başaramadın.", Snackbar.LENGTH_LONG)
-                                                    .show();
-                                        }
+
                                     }
                                 });
                     }
@@ -195,7 +195,7 @@ public class MainActivity extends AppCompatActivity {
                             }
 
 
-                            ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_spinner_dropdown_item,sessionNameList);
+                            ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_spinner_dropdown_item, sessionNameList);
                             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                             session_picker.setAdapter(adapter);
                         }
