@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("selected session id", sessionid);
 
                     String barcodeText = barcode.getText().toString();
+                    barcodeText = barcodeText.replace("\n", "");
 
                     if(!sessionid.equals("") && !barcodeText.equals("")) {
                         Ion.with(MainActivity.this)
