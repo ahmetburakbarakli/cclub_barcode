@@ -3,6 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/CClubBarcode.iml" filepath="$PROJECT_DIR$/CClubBarcode.iml" />
+<<<<<<< HEAD
+=======
+      <module fileurl="file://D:/GitHub/cclub_barcode/CClubBarcode.iml" filepath="D:/GitHub/cclub_barcode/CClubBarcode.iml" />
+>>>>>>> ff37866c87020300eb3fa977ff0116c6f1cac62a
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/cclub_barcode.iml" filepath="$PROJECT_DIR$/cclub_barcode.iml" />
     </modules>

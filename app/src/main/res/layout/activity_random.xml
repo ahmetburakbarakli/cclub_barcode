@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="10dp">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Kaç kişii?"
+        android:id="@+id/editTextRandomCount"
+        android:inputType="number"
+        android:layout_margin="10dp" />
+
+    <Spinner
+        android:id="@+id/session_picker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="10dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Minumum katılım sayısı"
+        android:id="@+id/editTextMinNumber"
+        android:inputType="number"
+        android:layout_margin="10dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonRandomWithSession"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="10dp"
+        android:text="Seçilen oturuma göre getir"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonRandomWithAttend"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="10dp"
+        android:text="Katılım Sayısına göre getir"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonRandom"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="10dp"
+        android:text="Kafan Göre Getir"/>
+
+
+
+</LinearLayout>
