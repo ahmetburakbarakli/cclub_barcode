@@ -16,3 +16,8 @@ Also need to be connected to internet in order to open application.
 pre-v0.0.3
 Added a about dialog in stats button
 Removed unnecessary imports
+
+v0.0.3
+'compile' is changed with implementation as 'compile' is obsolete and it will be removed at the end of 2018. We need to keep our app up-to-date ^^
+Added a part to get random participant for giveaways.
+Finalized application for "Bilişim Günü'18" but this app can be used for different events. Thus, I assume v0.0.3 will be not final version.
